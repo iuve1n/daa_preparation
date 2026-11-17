@@ -1,0 +1,6 @@
+.impeccable/review/
+__pycache__/
+*.class
+.DS_Store
+.env
+.env.*

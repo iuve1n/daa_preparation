@@ -1,0 +1,982 @@
+[
+  {
+    "id": 0,
+    "lesson": 1,
+    "prompt": "Two-sum must return distinct indices. Which input exposes an implementation that reuses the current element before checking its complement?",
+    "options": [
+      "[3], target 6",
+      "[3,4], target 7",
+      "[1,2], target 8",
+      "[], target 0"
+    ],
+    "answer": 0,
+    "why": "A single 3 cannot be used twice. Check for an existing complement before inserting the current element.",
+    "type": "mc",
+    "skill": "Contracts"
+  },
+  {
+    "id": 1,
+    "lesson": 1,
+    "prompt": "A baseline passes 10,000 random tests. What conclusion is justified?",
+    "options": [
+      "It is correct for all valid inputs",
+      "No tested input exposed a failure",
+      "Its worst-case bound is established",
+      "Its average cost is now constant"
+    ],
+    "answer": 1,
+    "why": "Testing provides evidence on the tested inputs. Universal correctness and asymptotic claims require separate reasoning.",
+    "type": "mc",
+    "skill": "Contracts"
+  },
+  {
+    "id": 2,
+    "lesson": 1,
+    "prompt": "How many unordered index pairs does brute-force two-sum examine on 8 elements if no pair matches?",
+    "answer": "28",
+    "why": "Each pair i<j is visited once: 8×7/2=28.",
+    "type": "input",
+    "skill": "Contracts"
+  },
+  {
+    "id": 3,
+    "lesson": 1,
+    "prompt": "You need original indices after sorting for two-sum. What information should travel with each value?",
+    "options": [
+      "Its original array index",
+      "Its final sorted position",
+      "Its number of comparisons",
+      "Its current neighbor value"
+    ],
+    "answer": 0,
+    "why": "Sorting value-index pairs preserves the indices required by the contract.",
+    "type": "mc",
+    "skill": "Contracts"
+  },
+  {
+    "id": 4,
+    "lesson": 2,
+    "prompt": "Solve T(n)=T(n−1)+Θ(1), T(1)=Θ(1).",
+    "options": [
+      "Θ(log n)",
+      "Θ(n)",
+      "Θ(n log n)",
+      "Θ(n²)"
+    ],
+    "answer": 1,
+    "why": "There are n−1 recursive reductions with constant additional work each.",
+    "type": "mc",
+    "skill": "Recursion"
+  },
+  {
+    "id": 5,
+    "lesson": 2,
+    "prompt": "Solve T(n)=2T(n/2)+(n log n)².",
+    "options": [
+      "Θ(n log²n)",
+      "Θ(n² log n)",
+      "Θ(n² log²n)",
+      "Θ(n² log³n)"
+    ],
+    "answer": 2,
+    "why": "The n²log²n work dominates n^(log₂2)=n polynomially and satisfies regularity.",
+    "type": "mc",
+    "skill": "Recursion"
+  },
+  {
+    "id": 6,
+    "lesson": 2,
+    "prompt": "Merge [2,7] and [1,5]. How many element-to-element comparisons are needed before one side becomes empty?",
+    "answer": "3",
+    "why": "Compare 2 vs 1, 2 vs 5, and 7 vs 5; append the remaining 7 without a comparison.",
+    "type": "input",
+    "skill": "Recursion"
+  },
+  {
+    "id": 7,
+    "lesson": 2,
+    "prompt": "Which tie rule makes a conventional Merge Sort stable?",
+    "options": [
+      "Take the left item on equality",
+      "Take the right item on equality",
+      "Alternate sides on equality",
+      "Choose the shorter half on equality"
+    ],
+    "answer": 0,
+    "why": "Equal elements from the left half appeared earlier originally, so they must remain earlier.",
+    "type": "mc",
+    "skill": "Recursion"
+  },
+  {
+    "id": 8,
+    "lesson": 3,
+    "prompt": "Which notation denotes an asymptotic upper bound?",
+    "options": [
+      "Θ",
+      "O",
+      "Ω",
+      "ω"
+    ],
+    "answer": 1,
+    "why": "Big O is an eventual upper bound. Θ is tight; Ω is a lower bound; little omega is a strict lower-growth relation.",
+    "type": "mc",
+    "skill": "Big O, Ω, Θ"
+  },
+  {
+    "id": 9,
+    "lesson": 3,
+    "prompt": "Which claim about f(n)=3n²+2n is false?",
+    "options": [
+      "f is O(n³)",
+      "f is Ω(n)",
+      "f is Θ(n²)",
+      "f is Θ(n³)"
+    ],
+    "answer": 3,
+    "why": "A quadratic is upper-bounded by a cubic, but it is not lower-bounded by a positive constant times n³ eventually.",
+    "type": "mc",
+    "skill": "Big O, Ω, Θ"
+  },
+  {
+    "id": 10,
+    "lesson": 3,
+    "prompt": "An invariant holds initially and is maintained. What else establishes total correctness?",
+    "options": [
+      "A decreasing termination measure and the exit implication",
+      "A benchmark showing small input finishes quickly",
+      "A second invariant with the same meaning",
+      "A randomized test covering several input sizes"
+    ],
+    "answer": 0,
+    "why": "The invariant gives partial correctness at exit. A well-founded decreasing measure proves termination.",
+    "type": "mc",
+    "skill": "Big O, Ω, Θ"
+  },
+  {
+    "id": 11,
+    "lesson": 3,
+    "prompt": "How many iterations execute in “for (int i=1; i<64; i*=2)”?",
+    "answer": "6",
+    "why": "The body runs at i=1,2,4,8,16,32.",
+    "type": "input",
+    "skill": "Big O, Ω, Θ"
+  },
+  {
+    "id": 12,
+    "lesson": 4,
+    "prompt": "With geometric capacity growth, dynamic-array append is:",
+    "options": [
+      "Worst-case Θ(1), amortized Θ(1)",
+      "Worst-case Θ(n), amortized Θ(1)",
+      "Worst-case Θ(n), amortized Θ(log n)",
+      "Worst-case Θ(log n), amortized Θ(n)"
+    ],
+    "answer": 1,
+    "why": "An occasional append copies n elements; the total copying across a sequence is linear.",
+    "type": "mc",
+    "skill": "Amortization"
+  },
+  {
+    "id": 13,
+    "lesson": 4,
+    "prompt": "Why can a LinkedList scan be slower than an ArrayList scan?",
+    "options": [
+      "Extra comparisons are required by linked lists",
+      "Pointer chasing gives poorer cache locality",
+      "Linked nodes must be visited in sorted order",
+      "Every next-node operation searches from the head"
+    ],
+    "answer": 1,
+    "why": "Sequential nodes may be far apart in memory. Both scans are linear, but memory behavior differs.",
+    "type": "mc",
+    "skill": "Amortization"
+  },
+  {
+    "id": 14,
+    "lesson": 4,
+    "prompt": "Remove all n entries using standard binary-heap root removal. Worst-case total cost?",
+    "options": [
+      "Θ(n)",
+      "Θ(log n)",
+      "Θ(n log n)",
+      "Θ(n²)"
+    ],
+    "answer": 2,
+    "why": "The sum of logarithmic removals is Θ(n log n), despite bottom-up construction being linear.",
+    "type": "mc",
+    "skill": "Amortization"
+  },
+  {
+    "id": 15,
+    "lesson": 4,
+    "prompt": "In a zero-indexed binary heap, what is the left-child index of index 4?",
+    "answer": "9",
+    "why": "The left child is 2i+1=9; the right child is 10.",
+    "type": "input",
+    "skill": "Amortization"
+  },
+  {
+    "id": 16,
+    "lesson": 5,
+    "prompt": "Chaining with well-distributed hashing has expected lookup cost:",
+    "options": [
+      "O(1+α)",
+      "O(log n+α)",
+      "O(n+α)",
+      "O(α log n)"
+    ],
+    "answer": 0,
+    "why": "A chain has expected length proportional to the load factor α=n/m.",
+    "type": "mc",
+    "skill": "Hash tables"
+  },
+  {
+    "id": 17,
+    "lesson": 5,
+    "prompt": "A trie key has length L and O(1) transitions. Exact lookup costs:",
+    "options": [
+      "O(log L)",
+      "O(L)",
+      "O(n)",
+      "O(nL)"
+    ],
+    "answer": 1,
+    "why": "One transition per symbol plus a terminal check is sufficient.",
+    "type": "mc",
+    "skill": "Hash tables"
+  },
+  {
+    "id": 18,
+    "lesson": 5,
+    "prompt": "A hash table exceeds its configured maximum load factor. What is the usual next step?",
+    "options": [
+      "Keep capacity and change key equality",
+      "Allocate a larger table and rehash entries",
+      "Keep capacity and remove duplicate hashes",
+      "Allocate a larger table and preserve bucket indices"
+    ],
+    "answer": 1,
+    "why": "Bucket indices depend on capacity, so entries must be redistributed.",
+    "type": "mc",
+    "skill": "Hash tables"
+  },
+  {
+    "id": 19,
+    "lesson": 5,
+    "prompt": "A chained table stores 150 keys in 60 buckets. What is its load factor?",
+    "answer": "2.5",
+    "why": "α=n/m=150/60=2.5; chaining permits α greater than 1.",
+    "type": "input",
+    "skill": "Hash tables"
+  },
+  {
+    "id": 20,
+    "lesson": 6,
+    "prompt": "Prim starts at 1 with edges 1–2(2), 1–3(3), 2–3(1), 2–4(4), 3–4(5). Which sequence is selected?",
+    "options": [
+      "1–2, 2–3, 3–4",
+      "1–2, 2–3, 2–4",
+      "1–2, 1–3, 2–4",
+      "2–3, 1–2, 2–4"
+    ],
+    "answer": 1,
+    "why": "Prim selects the minimum crossing edge of the current tree, not the globally smallest unused edge.",
+    "type": "mc",
+    "skill": "DSU"
+  },
+  {
+    "id": 21,
+    "lesson": 6,
+    "prompt": "Prim on a connected simple adjacency-list graph with a binary heap runs in:",
+    "options": [
+      "O(V²)",
+      "O(E log V)",
+      "O(E+V)",
+      "O(V log V)"
+    ],
+    "answer": 1,
+    "why": "Heap updates for graph edges contribute O(E log V). A matrix implementation has a different bound.",
+    "type": "mc",
+    "skill": "DSU"
+  },
+  {
+    "id": 22,
+    "lesson": 6,
+    "prompt": "Kruskal encounters an edge whose endpoints have the same DSU representative. It should:",
+    "options": [
+      "Accept it and merge by rank",
+      "Reject it to avoid a cycle",
+      "Accept it if the weight is negative",
+      "Reject all remaining heavier edges"
+    ],
+    "answer": 1,
+    "why": "The endpoints already have a path in the current forest. Adding the edge creates a cycle regardless of sign.",
+    "type": "mc",
+    "skill": "DSU"
+  },
+  {
+    "id": 23,
+    "lesson": 6,
+    "prompt": "A connected undirected graph has 9 vertices. How many edges does any spanning tree contain?",
+    "answer": "8",
+    "why": "Every tree on V vertices has V−1 edges.",
+    "type": "input",
+    "skill": "DSU"
+  },
+  {
+    "id": 24,
+    "lesson": 7,
+    "prompt": "Contract every SCC to one vertex. The condensation graph is always:",
+    "options": [
+      "A tree",
+      "A complete graph",
+      "A DAG",
+      "A strongly connected graph"
+    ],
+    "answer": 2,
+    "why": "A directed cycle between distinct SCCs would make them mutually reachable, contradicting maximality.",
+    "type": "mc",
+    "skill": "Kosaraju"
+  },
+  {
+    "id": 25,
+    "lesson": 7,
+    "prompt": "Which procedure directly produces a topological order of a DAG?",
+    "options": [
+      "Prim’s algorithm",
+      "Kahn’s algorithm",
+      "Bellman–Ford",
+      "Disjoint set union"
+    ],
+    "answer": 1,
+    "why": "Kahn removes zero-indegree vertices. It also detects cycles if not all vertices can be removed.",
+    "type": "mc",
+    "skill": "Kosaraju"
+  },
+  {
+    "id": 26,
+    "lesson": 7,
+    "prompt": "A vertex finish time in DFS is recorded when:",
+    "options": [
+      "It is first discovered",
+      "Its first outgoing edge is explored",
+      "All its DFS descendants are processed",
+      "All its DFS ancestors are processed"
+    ],
+    "answer": 2,
+    "why": "Finish occurs after every outgoing exploration from that vertex has completed.",
+    "type": "mc",
+    "skill": "Kosaraju"
+  },
+  {
+    "id": 27,
+    "lesson": 7,
+    "prompt": "Kahn removes 6 vertices from an 8-vertex directed graph before its queue empties. How many vertices remain unprocessed?",
+    "answer": "2",
+    "why": "Two remain. The graph contains a cycle, though not every remaining vertex must lie on a cycle.",
+    "type": "input",
+    "skill": "Kosaraju"
+  },
+  {
+    "id": 28,
+    "lesson": 8,
+    "prompt": "For strictly increasing LIS, binary search finds:",
+    "options": [
+      "The first tails entry ≥ the current value",
+      "The first tails entry > the current value",
+      "The last tails entry ≥ the current value",
+      "The last tails entry > the current value"
+    ],
+    "answer": 0,
+    "why": "Lower_bound preserves strict increase; upper_bound would allow equal values in a nondecreasing subsequence.",
+    "type": "mc",
+    "skill": "LCS & LIS"
+  },
+  {
+    "id": 29,
+    "lesson": 8,
+    "prompt": "What is the edit distance between “cat” and “cut” with unit insertion, deletion, substitution costs?",
+    "answer": "1",
+    "why": "Substitute a→u. Zero edits cannot change unequal strings, so 1 is optimal.",
+    "type": "input",
+    "skill": "LCS & LIS"
+  },
+  {
+    "id": 30,
+    "lesson": 8,
+    "prompt": "Why iterate capacities downward in one-dimensional 0/1 knapsack?",
+    "options": [
+      "To sort items by decreasing weight",
+      "To avoid using the current item more than once",
+      "To avoid considering empty capacity",
+      "To reconstruct the items without extra storage"
+    ],
+    "answer": 1,
+    "why": "dp[w−weight] must still refer to the previous item layer, not an update made for the current item.",
+    "type": "mc",
+    "skill": "LCS & LIS"
+  },
+  {
+    "id": 31,
+    "lesson": 8,
+    "prompt": "What is the strictly increasing LIS length of [3,5,7,1,2,8]?",
+    "answer": "4",
+    "why": "One LIS is [3,5,7,8]. The tails array can be [1,2,7,8] without itself being an input subsequence.",
+    "type": "input",
+    "skill": "LCS & LIS"
+  },
+  {
+    "id": 32,
+    "lesson": 9,
+    "prompt": "A fixed-length rolling hash and precomputed leading power are known. Computing the next window hash takes:",
+    "options": [
+      "O(n)",
+      "O(1)",
+      "O(m)",
+      "O(log m)"
+    ],
+    "answer": 1,
+    "why": "Remove the leading contribution, multiply by the base, and add the incoming symbol with constant modular arithmetic.",
+    "type": "mc",
+    "skill": "KMP preprocessing"
+  },
+  {
+    "id": 33,
+    "lesson": 9,
+    "prompt": "Why is polynomial-hash base p=1 problematic?",
+    "options": [
+      "It makes modular multiplication linear",
+      "It prevents computing any prefix hash",
+      "It makes anagrams collide systematically",
+      "It requires a prime-length pattern"
+    ],
+    "answer": 2,
+    "why": "All positional weights become 1, so order information disappears.",
+    "type": "mc",
+    "skill": "KMP preprocessing"
+  },
+  {
+    "id": 34,
+    "lesson": 9,
+    "prompt": "For pattern “ababaca”, what is π[4] using zero-based indexing?",
+    "answer": "3",
+    "why": "The prefix “ababa” has longest proper border “aba”, length 3.",
+    "type": "input",
+    "skill": "KMP preprocessing"
+  },
+  {
+    "id": 35,
+    "lesson": 9,
+    "prompt": "After a full KMP match, how do you preserve overlapping matches?",
+    "options": [
+      "Set matched length to π[m−1]",
+      "Set matched length to m",
+      "Move text index back by m",
+      "Set matched length to zero"
+    ],
+    "answer": 0,
+    "why": "The longest proper border may already match a prefix of the next occurrence.",
+    "type": "mc",
+    "skill": "KMP preprocessing"
+  },
+  {
+    "id": 36,
+    "lesson": 10,
+    "prompt": "Aho–Corasick is primarily designed for:",
+    "options": [
+      "One pattern with approximate matching",
+      "Many patterns in one text scan",
+      "One longest increasing subsequence",
+      "Sorting all suffixes of a text"
+    ],
+    "answer": 1,
+    "why": "A trie plus failure and output links shares work across a dictionary of patterns.",
+    "type": "mc",
+    "skill": "Prefix doubling"
+  },
+  {
+    "id": 37,
+    "lesson": 10,
+    "prompt": "Prefix doubling sorts suffixes by:",
+    "options": [
+      "Complete suffix strings in every round",
+      "Pairs of ranks of consecutive blocks",
+      "Only their first character each round",
+      "Pairs of randomly assigned priorities"
+    ],
+    "answer": 1,
+    "why": "Two length-k block ranks represent a length-2k prefix, with a sentinel for missing second blocks.",
+    "type": "mc",
+    "skill": "Prefix doubling"
+  },
+  {
+    "id": 38,
+    "lesson": 10,
+    "prompt": "Using LCP[r]=lcp(SA[r],SA[r−1]), LCP[0]=0, what is the maximum LCP for “banana”?",
+    "answer": "3",
+    "why": "The adjacent suffixes “ana” and “anana” share “ana”.",
+    "type": "input",
+    "skill": "Prefix doubling"
+  },
+  {
+    "id": 39,
+    "lesson": 10,
+    "prompt": "Why is Kasai linear after the suffix array is available?",
+    "options": [
+      "Every suffix comparison starts at zero",
+      "The carried common-prefix length falls by at most one per text step",
+      "The suffix array contains only equal-length suffixes",
+      "Binary search replaces all character comparisons"
+    ],
+    "answer": 1,
+    "why": "The carried length rises only O(n) times in total and falls at most O(n) times.",
+    "type": "mc",
+    "skill": "Prefix doubling"
+  },
+  {
+    "id": 40,
+    "lesson": 2,
+    "prompt": "T(n)=2T(n/2)+n, n=8. Excluding the leaves, how much combine work is done across all levels?",
+    "answer": "24",
+    "why": "Three internal levels each contribute 8 units: 8+8+8=24.",
+    "type": "input",
+    "skill": "Recursion"
+  },
+  {
+    "id": 41,
+    "lesson": 4,
+    "prompt": "Append 9 elements to an initially empty capacity-1 array, doubling only when full. How many existing elements are copied in total?",
+    "answer": "15",
+    "why": "Growth copies 1+2+4+8=15 elements. New writes are not included.",
+    "type": "input",
+    "skill": "Amortization"
+  },
+  {
+    "id": 42,
+    "lesson": 6,
+    "prompt": "For edges 1–2(2), 1–3(3), 2–3(1), 2–4(4), 3–4(5), what is the MST total weight?",
+    "answer": "7",
+    "why": "Choose weights 1,2,4. All four vertices are connected with three edges.",
+    "type": "input",
+    "skill": "DSU"
+  },
+  {
+    "id": 43,
+    "lesson": 7,
+    "prompt": "DAG edges s→a(4), s→b(2), a→b(−5). What is the shortest s→b distance?",
+    "answer": "-1",
+    "why": "The route s→a→b costs 4−5=−1, better than the direct edge.",
+    "type": "input",
+    "skill": "Kosaraju"
+  },
+  {
+    "id": 44,
+    "lesson": 9,
+    "prompt": "Use a=1,b=2,c=3, base 10, modulus 101. Hash “ab” is 12. What is the next-window hash for “bc”?",
+    "answer": "23",
+    "why": "Remove 1×10, then multiply by 10 and append 3: (12−10)×10+3=23.",
+    "type": "input",
+    "skill": "KMP preprocessing"
+  },
+  {
+    "id": 45,
+    "lesson": 10,
+    "prompt": "How many distinct substrings does “aaa” have?",
+    "answer": "3",
+    "why": "They are a, aa, aaa. Equivalently n(n+1)/2−ΣLCP=6−3=3.",
+    "type": "input",
+    "skill": "Prefix doubling"
+  },
+  {
+    "id": 46,
+    "lesson": 1,
+    "prompt": "A brute-force algorithm checks all unordered pairs of 12 elements. How many pairs are checked in the no-match case?",
+    "answer": "66",
+    "why": "There are 12×11/2=66 distinct pairs.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "Contracts"
+  },
+  {
+    "id": 47,
+    "lesson": 2,
+    "prompt": "For n=32 split evenly to singleton leaves, what is Merge Sort’s recursion depth in edges from root to leaf?",
+    "answer": "5",
+    "why": "Five halvings reduce 32 to 1. Count edges, not the six levels including the root.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "Recursion"
+  },
+  {
+    "id": 48,
+    "lesson": 3,
+    "prompt": "How many body executions occur for i=3; i<100; i*=3?",
+    "answer": "4",
+    "why": "The values are 3,9,27,81; next is 243.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "Big O, Ω, Θ"
+  },
+  {
+    "id": 49,
+    "lesson": 4,
+    "prompt": "Starting with capacity 2 and zero items, append 10 values with doubling when full. How many existing items are copied?",
+    "answer": "14",
+    "why": "Copies occur at sizes 2,4,8: total 14.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "Amortization"
+  },
+  {
+    "id": 50,
+    "lesson": 5,
+    "prompt": "Which workload most directly favors a balanced BST over a hash table?",
+    "options": [
+      "Many exact-key lookups with no ordering",
+      "Repeated queries for all keys in a numeric interval",
+      "Appending values and scanning them sequentially",
+      "Removing only the most recently added value"
+    ],
+    "answer": 1,
+    "why": "An ordered tree supports range traversal in O(log n+k) for k reported keys, unlike a basic hash table.",
+    "type": "mc",
+    "examOnly": true,
+    "skill": "Hash tables"
+  },
+  {
+    "id": 51,
+    "lesson": 6,
+    "prompt": "An MST currently spans 5 of 8 vertices. How many additional edges are needed to finish a spanning tree?",
+    "answer": "3",
+    "why": "Each accepted tree edge brings one new vertex. The finished tree has seven edges; currently it has four.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "DSU"
+  },
+  {
+    "id": 52,
+    "lesson": 7,
+    "prompt": "Kahn leaves vertices x,y,z unprocessed. Which statement must hold?",
+    "options": [
+      "Every unprocessed vertex lies on a directed cycle",
+      "At least one directed cycle exists in the graph",
+      "All processed vertices belong to one SCC",
+      "All unprocessed vertices belong to one SCC"
+    ],
+    "answer": 1,
+    "why": "Vertices downstream from cycles may also remain. Kahn’s incomplete processing proves a cycle exists, not that every remainder is on it.",
+    "type": "mc",
+    "examOnly": true,
+    "skill": "Kosaraju"
+  },
+  {
+    "id": 53,
+    "lesson": 8,
+    "prompt": "For strictly increasing LIS, what is the answer on [2,2,2,3,3]?",
+    "answer": "2",
+    "why": "Repeated equal values cannot extend a strictly increasing subsequence. Choose one 2 and one 3.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "LCS & LIS"
+  },
+  {
+    "id": 54,
+    "lesson": 9,
+    "prompt": "Pattern “aaa” is searched in “aaaaa”, including overlaps. How many matches exist?",
+    "answer": "3",
+    "why": "Starts at indices 0,1,2. KMP falls back through the prefix function after a match.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "KMP preprocessing"
+  },
+  {
+    "id": 55,
+    "lesson": 10,
+    "prompt": "For text “aaaa”, how many distinct nonempty substrings exist?",
+    "answer": "4",
+    "why": "They are a, aa, aaa, aaaa. LCP sum is 1+2+3=6, so 10−6=4.",
+    "type": "input",
+    "examOnly": true,
+    "skill": "Prefix doubling"
+  },
+  {
+    "id": 56,
+    "lesson": 1,
+    "prompt": "An algorithm returns indices (2,2) for [5,1,3] and target 6. Which contract condition fails?",
+    "options": [
+      "Both indices are within bounds",
+      "Both selected values sum to target",
+      "The selected indices are distinct",
+      "The input values must be sorted"
+    ],
+    "answer": 2,
+    "type": "mc",
+    "why": "Using one index twice violates the distinct-index requirement, even though 3+3=6.",
+    "skill": "Contracts",
+    "expanded": true
+  },
+  {
+    "id": 57,
+    "lesson": 1,
+    "prompt": "A correct two-sum implementation returns a different valid pair from your oracle. What should your checker do?",
+    "options": [
+      "Reject unless both arrays are identical",
+      "Validate the returned pair against the contract",
+      "Accept only the lexicographically first pair",
+      "Sort the returned values and compare lengths"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "When several outputs are valid, check the specification rather than one canonical output.",
+    "skill": "Validation",
+    "expanded": true
+  },
+  {
+    "id": 58,
+    "lesson": 2,
+    "prompt": "Merge Sort on an empty half-open range [k,k) should:",
+    "options": [
+      "Return without reading the array",
+      "Read a[k] to create a singleton",
+      "Split into two ranges of length one",
+      "Merge with the next nonempty range"
+    ],
+    "answer": 0,
+    "type": "mc",
+    "why": "The base case hi−lo≤1 includes length zero and prevents invalid reads.",
+    "skill": "Boundaries",
+    "expanded": true
+  },
+  {
+    "id": 59,
+    "lesson": 2,
+    "prompt": "T(n)=4T(n/2)+n. What is the tight asymptotic bound?",
+    "options": [
+      "Θ(n log n)",
+      "Θ(n²)",
+      "Θ(n² log n)",
+      "Θ(n³)"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "n^(log₂4)=n² dominates the linear combine work.",
+    "skill": "Recurrences",
+    "expanded": true
+  },
+  {
+    "id": 60,
+    "lesson": 3,
+    "prompt": "A pointer j is initialized once and increases at most n times across n outer iterations. The inner-body total is:",
+    "options": [
+      "Θ(n²) in every case",
+      "O(n) across the run",
+      "Θ(log n) across the run",
+      "O(1) across the run"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "Count total pointer moves, not just the syntactic loop nesting.",
+    "skill": "Operation counting",
+    "expanded": true
+  },
+  {
+    "id": 61,
+    "lesson": 3,
+    "prompt": "Which result would establish a tight Θ(g(n)) bound on the same cost function?",
+    "options": [
+      "An O(g(n)) proof alone",
+      "An Ω(g(n)) proof alone",
+      "Both O(g(n)) and Ω(g(n)) proofs",
+      "Two measured runtimes proportional to g(n)"
+    ],
+    "answer": 2,
+    "type": "mc",
+    "why": "A tight asymptotic bound needs both eventual upper and lower bounds.",
+    "skill": "Bounds",
+    "expanded": true
+  },
+  {
+    "id": 62,
+    "lesson": 4,
+    "prompt": "A binary min-heap is [1,4,2,7,5]. Remove its root. Which array can result after standard sift-down?",
+    "options": [
+      "[2,4,5,7]",
+      "[4,2,5,7]",
+      "[2,7,4,5]",
+      "[5,4,2,7]"
+    ],
+    "answer": 0,
+    "type": "mc",
+    "why": "Replace 1 with 5, then swap with the smaller child 2. The remaining heap is [2,4,5,7].",
+    "skill": "Heap trace",
+    "expanded": true
+  },
+  {
+    "id": 63,
+    "lesson": 4,
+    "prompt": "Why does bottom-up heap construction improve over repeated insertion?",
+    "options": [
+      "It sorts all nodes before the first sift",
+      "Most nodes have small height and little sift work",
+      "It avoids comparing parent and child keys",
+      "All nodes are already in heap order"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "The height-weighted sum of sift work is linear.",
+    "skill": "Heap analysis",
+    "expanded": true
+  },
+  {
+    "id": 64,
+    "lesson": 5,
+    "prompt": "Linear probing stores collided keys in slots 2,3,4. Slot 3 is deleted. Which action preserves lookup?",
+    "options": [
+      "Mark 3 never-used and stop searches there",
+      "Mark 3 deleted and keep probing across it",
+      "Move slot 4 to an arbitrary empty slot",
+      "Remove every key with the same hash"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "Tombstones preserve probe chains. A never-used marker would hide keys beyond it.",
+    "skill": "Deletion",
+    "expanded": true
+  },
+  {
+    "id": 65,
+    "lesson": 5,
+    "prompt": "A trie stores “team” and “tea”. How many non-root nodes are needed?",
+    "options": null,
+    "answer": "4",
+    "type": "input",
+    "why": "The shared path t→e→a has three nodes; m adds one. Both a and m are terminal.",
+    "skill": "Trie trace",
+    "expanded": true
+  },
+  {
+    "id": 66,
+    "lesson": 6,
+    "prompt": "Two equal-weight edges cross a cut. The cut property guarantees that each lightest edge:",
+    "options": [
+      "Appears in every MST",
+      "Can appear in some MST",
+      "Must be excluded by Kruskal",
+      "Connects a unique pair of components"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "The exchange argument gives existence in some MST; equal weights may allow alternatives.",
+    "skill": "Greedy proof",
+    "expanded": true
+  },
+  {
+    "id": 67,
+    "lesson": 6,
+    "prompt": "Perform union(0,1), union(1,2), union(3,4), union(2,4) on 6 singleton sets. How many sets remain?",
+    "options": null,
+    "answer": "2",
+    "type": "input",
+    "why": "Four successful unions reduce six components to two: {0,1,2,3,4} and {5}.",
+    "skill": "DSU trace",
+    "expanded": true
+  },
+  {
+    "id": 68,
+    "lesson": 7,
+    "prompt": "An isolated vertex has no incoming or outgoing edges. In an SCC decomposition it:",
+    "options": [
+      "Belongs to no component",
+      "Forms a singleton component",
+      "Joins the source component",
+      "Makes decomposition undefined"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "Reachability includes a zero-length path from a vertex to itself.",
+    "skill": "SCC definitions",
+    "expanded": true
+  },
+  {
+    "id": 69,
+    "lesson": 7,
+    "prompt": "Why guard dist[u] != INF before relaxing a DAG edge u→v?",
+    "options": [
+      "To ensure all edge weights are positive",
+      "To prevent sentinel arithmetic inventing a reachable path",
+      "To keep the topological order lexicographic",
+      "To ensure every vertex has an outgoing edge"
+    ],
+    "answer": 1,
+    "type": "mc",
+    "why": "Only reachable prefixes can extend real paths; INF arithmetic may overflow or become spuriously smaller.",
+    "skill": "Shortest paths",
+    "expanded": true
+  },
+  {
+    "id": 70,
+    "lesson": 8,
+    "prompt": "What is the unit-cost edit distance between the empty string and “abcd”?",
+    "options": null,
+    "answer": "4",
+    "type": "input",
+    "why": "Insert all four characters. This is the D[0][j]=j base case.",
+    "skill": "DP base cases",
+    "expanded": true
+  },
+  {
+    "id": 71,
+    "lesson": 8,
+    "prompt": "LCS(“abc”,“ac”) has length:",
+    "options": null,
+    "answer": "2",
+    "type": "input",
+    "why": "The subsequence ac uses positions 0 and 2; contiguity is not required.",
+    "skill": "Subsequences",
+    "expanded": true
+  },
+  {
+    "id": 72,
+    "lesson": 9,
+    "prompt": "With high-order hash H(abc)=123 and base 10, what is H(bc) without modulus effects?",
+    "options": null,
+    "answer": "23",
+    "type": "input",
+    "why": "Subtract leading contribution 1×100.",
+    "skill": "Hash convention",
+    "expanded": true
+  },
+  {
+    "id": 73,
+    "lesson": 9,
+    "prompt": "Pattern “aaaa” has final prefix-function value:",
+    "options": null,
+    "answer": "3",
+    "type": "input",
+    "why": "Its longest proper prefix that is also a suffix is aaa.",
+    "skill": "Prefix function",
+    "expanded": true
+  },
+  {
+    "id": 74,
+    "lesson": 10,
+    "prompt": "For suffix array [2,1,0] of “aaa”, what is LCP[2] under the previous-suffix convention?",
+    "options": null,
+    "answer": "2",
+    "type": "input",
+    "why": "Compare suffixes aa and aaa: common prefix aa has length two.",
+    "skill": "Kasai trace",
+    "expanded": true
+  },
+  {
+    "id": 75,
+    "lesson": 10,
+    "prompt": "Aho–Corasick with patterns “a” and “aa” scans “aaa”. How many matches should be reported?",
+    "options": null,
+    "answer": "5",
+    "type": "input",
+    "why": "Three a matches and two aa matches; overlapping occurrences count.",
+    "skill": "Output links",
+    "expanded": true
+  }
+]

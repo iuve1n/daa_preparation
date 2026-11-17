@@ -1,0 +1,152 @@
+[
+  {
+    "id": 0,
+    "lesson": 2,
+    "title": "Merge Sort",
+    "brief": "Return a sorted copy of an integer array. Do not mutate the input. Preserve duplicate values. Use a shared auxiliary array, not a new array at every recursive call.",
+    "signature": "static int[] solve(int[] input)",
+    "starter": "static int[] solve(int[] input) {\n  // TODO: implement without looking at the reference.\n  return new int[0];\n}",
+    "tests": [
+      "Empty array → []",
+      "[7] → [7]",
+      "[3,1,3,−2] → [−2,1,3,3]",
+      "[9,8,7,6] → [6,7,8,9]"
+    ],
+    "rubric": [
+      "Half-open ranges and a terminating base case",
+      "Stable merge chooses left on equality",
+      "Θ(n log n) time and Θ(n) auxiliary storage"
+    ]
+  },
+  {
+    "id": 1,
+    "lesson": 6,
+    "title": "Disjoint Set Union",
+    "brief": "Process unions on n initially isolated vertices and return the component count. Use path compression and union by size or rank. Duplicate unions must not reduce the count.",
+    "signature": "static int solve(int n, int[][] edges)",
+    "starter": "static int solve(int n, int[][] edges) {\n  // TODO: implement without looking at the reference.\n  return n;\n}",
+    "tests": [
+      "n=4, edges=[] → 4",
+      "n=4, [(0,1),(1,2),(0,2)] → 2",
+      "n=3, [(0,0),(1,2)] → 2"
+    ],
+    "rubric": [
+      "find returns a representative",
+      "Only successful union decreases count",
+      "Near-constant amortized operations"
+    ]
+  },
+  {
+    "id": 2,
+    "lesson": 6,
+    "title": "Prim’s Algorithm",
+    "brief": "Return the MST total weight for an undirected graph with vertices 0..n−1. Edge rows are [u,v,weight]. Return 0 for n=0. Throw IllegalArgumentException if disconnected. Accumulate weights in long.",
+    "signature": "static long solve(int n, int[][] edges)",
+    "starter": "static long solve(int n, int[][] edges) {\n  // TODO: implement without looking at the reference.\n  return 0L;\n}",
+    "tests": [
+      "n=4, [(0,1,2),(0,2,3),(1,2,1),(1,3,4),(2,3,5)] → 7",
+      "n=1, [] → 0",
+      "n=2, [(0,1,−3)] → −3",
+      "n=3, [(0,1,1)] → IllegalArgumentException"
+    ],
+    "rubric": [
+      "Heap contains crossing candidates",
+      "Skip stale entries for visited vertices",
+      "Count visited vertices to detect disconnection"
+    ]
+  },
+  {
+    "id": 3,
+    "lesson": 7,
+    "title": "Kosaraju’s Algorithm",
+    "brief": "Return the number of strongly connected components in a directed graph, including isolated vertices. Edge rows are [from,to]. Use finish order and the transpose.",
+    "signature": "static int solve(int n, int[][] edges)",
+    "starter": "static int solve(int n, int[][] edges) {\n  // TODO: implement without looking at the reference.\n  return n;\n}",
+    "tests": [
+      "n=4, [(0,1),(1,2),(2,0),(2,3)] → 2",
+      "n=3, [] → 3",
+      "n=2, [(0,1),(1,0)] → 1"
+    ],
+    "rubric": [
+      "First pass records vertices on exit",
+      "Second pass uses the transpose in decreasing finish order",
+      "O(V+E); recursion depth considered"
+    ]
+  },
+  {
+    "id": 4,
+    "lesson": 8,
+    "title": "Edit Distance",
+    "brief": "Return the minimum number of unit-cost insertions, deletions, and substitutions converting a into b. Inputs are non-null Java strings. Empty strings are valid.",
+    "signature": "static int solve(String a, String b)",
+    "starter": "static int solve(String a, String b) {\n  // TODO: implement without looking at the reference.\n  return 0;\n}",
+    "tests": [
+      "cat, cut → 1",
+      "empty, abc → 3",
+      "kitten, sitting → 3",
+      "same, same → 0"
+    ],
+    "rubric": [
+      "State is a pair of prefix lengths",
+      "Initialize both empty-prefix boundaries",
+      "Transition takes min of delete, insert, substitute"
+    ]
+  },
+  {
+    "id": 5,
+    "lesson": 9,
+    "title": "KMP Preprocessing",
+    "brief": "Return the prefix-function array. pi[i] is the longest proper prefix of s[0..i] that is also a suffix. Empty input returns an empty array.",
+    "signature": "static int[] solve(String s)",
+    "starter": "static int[] solve(String s) {\n  // TODO: implement without looking at the reference.\n  return new int[0];\n}",
+    "tests": [
+      "ababaca → [0,0,1,2,3,0,1]",
+      "aaaa → [0,1,2,3]",
+      "abc → [0,0,0]",
+      "empty → []"
+    ],
+    "rubric": [
+      "Fallback uses pi[j−1], not j−1",
+      "Proper border cannot equal full prefix length",
+      "O(n) amortized character comparisons"
+    ]
+  },
+  {
+    "id": 6,
+    "lesson": 9,
+    "title": "Polynomial Rolling Hash",
+    "brief": "Return the high-order polynomial hash of s with a=1,…,z=26, base 31, modulus 1,000,000,007. Inputs contain only lowercase ASCII letters, including empty. Use long multiplication.",
+    "signature": "static long solve(String s)",
+    "starter": "static long solve(String s) {\n  // TODO: implement without looking at the reference.\n  return 0L;\n}",
+    "tests": [
+      "empty → 0",
+      "a → 1",
+      "ab → 33",
+      "abc → 1026"
+    ],
+    "rubric": [
+      "h=(h*31+symbol)%MOD",
+      "Document the orientation of powers",
+      "Equal hashes do not prove equal strings"
+    ]
+  },
+  {
+    "id": 7,
+    "lesson": 10,
+    "title": "Kasai’s Algorithm",
+    "brief": "Given a string and a valid suffix array permutation, return LCP with LCP[0]=0, LCP[r]=lcp(SA[r],SA[r−1]). Use inverse ranks and carry the match length.",
+    "signature": "static int[] solve(String s, int[] sa)",
+    "starter": "static int[] solve(String s, int[] sa) {\n  // TODO: implement without looking at the reference.\n  return new int[0];\n}",
+    "tests": [
+      "banana, [5,3,1,0,4,2] → [0,1,3,0,0,2]",
+      "aaa, [2,1,0] → [0,1,2]",
+      "a, [0] → [0]",
+      "empty, [] → []"
+    ],
+    "rubric": [
+      "Build inverse rank array",
+      "Reset carried length at rank 0",
+      "Decrease carried length by at most one each text step"
+    ]
+  }
+]

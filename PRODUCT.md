@@ -1,0 +1,3 @@
+DAA Fieldnotes is a sequential self-study companion for an AITU Java 17 algorithms course. The learner reads, predicts algorithm steps, implements locally, then retrieves knowledge in a mastery assessment. Preserve the syllabus order, distinguish official exams from the independent capstone, and favor accurate worked reasoning over decorative filler. Deployment target: GitHub Pages, no backend.
+
+V2 adds evidence-based analysis using latest unique-question responses, missed-question review, locally saved Java task drafts and explicit self-reported test status, and an optional syllabus-weighted grade calculator. Visual direction is now the user-requested Gradelyy-inspired blue/dark workspace with a light theme. Preserve existing local progress.

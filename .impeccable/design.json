@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-17T07:29:55.227792+00:00",
+  "title": "Design System: DAA Fieldnotes",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "mobile-rail",
+        "value": "10px 0 25px #2223",
+        "purpose": "Separate the mobile course menu."
+      },
+      {
+        "name": "current-navigation",
+        "value": "inset 2px 0 #0072f5",
+        "purpose": "Mark the current lesson."
+      }
+    ],
+    "motion": [
+      {
+        "name": "bar-height",
+        "value": "height .5s ease-out",
+        "purpose": "Algorithm bar changes, respecting reduced motion."
+      },
+      {
+        "name": "control-background",
+        "value": "background .15s ease-out",
+        "purpose": "Primary buttons and options, respecting reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "analysis-stack",
+        "value": "900px"
+      },
+      {
+        "name": "mobile",
+        "value": "650px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Continue learning or submit an assessment.",
+      "html": "<button class=\"ds-primary\">Continue learning \u2192</button>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;padding:12px 21px;border-radius:10px;font:700 13px DM Sans,sans-serif;cursor:pointer;background:var(--button,#0064d9);border:1px solid var(--button,#0064d9);color:white}.ds-primary:hover{background:#0058c4}.ds-primary:disabled{opacity:.5;cursor:not-allowed}.ds-primary:focus-visible{outline:3px solid var(--orange,#ffb34c);outline-offset:5px}@media(prefers-reduced-motion:no-preference){.ds-primary{transition:background .15s ease-out}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting navigation and trace actions.",
+      "html": "<button class=\"ds-secondary\">Next step \u2192</button>",
+      "css": ".ds-secondary{display:inline-flex;align-items:center;justify-content:center;padding:12px 21px;border-radius:10px;font:700 13px DM Sans,sans-serif;cursor:pointer;background:var(--raised,#161b26);border:1px solid var(--line,#263044);color:var(--ink,#f0f4ff)}.ds-secondary:hover{border-color:var(--green,#0072f5);background:var(--soft,#102544)}.ds-secondary:focus-visible{outline:3px solid var(--orange,#ffb34c);outline-offset:5px}"
+    },
+    {
+      "name": "Grade Input",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "A user-entered official assessment mark.",
+      "html": "<label class=\"ds-label\">Midterm<input class=\"ds-field\" type=\"number\" min=\"0\" max=\"100\" placeholder=\"0\u2013100\"></label>",
+      "css": ".ds-label{display:block;font:12px DM Sans,sans-serif;color:var(--ink,#f0f4ff)}.ds-field{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid var(--line,#263044);border-radius:8px;background:var(--surface,#0d1117);color:var(--ink,#f0f4ff);font:16px DM Sans,sans-serif}.ds-field::placeholder{color:var(--muted,#a2adc2)}.ds-field:focus-visible{outline:3px solid var(--orange,#ffb34c);outline-offset:5px}"
+    },
+    {
+      "name": "Course Navigation",
+      "kind": "nav",
+      "description": "Sequential links with an inset current lesson marker.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#lesson/1\">01\u3000Foundations</a><a class=\"ds-current\" href=\"#lesson/2\">02\u3000Merge Sort</a></nav>",
+      "css": ".ds-nav{padding:15px;background:var(--surface,#0d1117);color:var(--ink,#f0f4ff)}.ds-nav a{display:block;text-decoration:none;font:12px/1.5 DM Sans,sans-serif;padding:9px 10px;margin:2px -10px;border-radius:6px;color:inherit}.ds-nav a:hover,.ds-nav .ds-current{background:var(--soft,#102544)}.ds-nav .ds-current{box-shadow:inset 2px 0 #0072f5}.ds-nav a:focus-visible{outline:3px solid var(--orange,#ffb34c);outline-offset:5px}"
+    },
+    {
+      "name": "Topic Tag",
+      "kind": "chip",
+      "description": "Noninteractive lesson topic.",
+      "html": "<span class=\"ds-tag\">Divide and conquer</span>",
+      "css": ".ds-tag{display:inline-block;border:1px solid var(--line,#263044);padding:4px 10px;border-radius:4px;background:var(--raised,#161b26);color:var(--muted,#a2adc2);font:11px/1.65 DM Sans,sans-serif}"
+    },
+    {
+      "name": "Evidence Summary",
+      "kind": "card",
+      "description": "Latest learning evidence on a raised surface.",
+      "html": "<div class=\"ds-summary\"><span>Questions to revisit</span><strong>4</strong><small>Latest answer was incorrect</small></div>",
+      "css": ".ds-summary{padding:23px;background:var(--raised,#161b26);border-radius:14px;color:var(--ink,#f0f4ff);font-family:DM Sans,sans-serif}.ds-summary span,.ds-summary small{display:block;font-size:12px;color:var(--muted,#a2adc2)}.ds-summary strong{display:block;font:600 27px/1.4 Sora,sans-serif;margin:12px 0}"
+    },
+    {
+      "name": "Java Method Editor",
+      "kind": "input",
+      "description": "Saved local method draft, with execution performed in a local JDK.",
+      "html": "<label class=\"ds-label\" for=\"ds-code\">Java source</label><textarea class=\"ds-editor\" id=\"ds-code\" spellcheck=\"false\">static int solve(int[] a) {\n  // Implement your invariant.\n}</textarea>",
+      "css": ".ds-label{display:block;color:var(--ink,#f0f4ff);font:13px DM Sans,sans-serif;margin-bottom:8px}.ds-editor{width:100%;min-height:300px;padding:12px;border:1px solid var(--line,#263044);border-radius:8px;background:var(--surface,#0d1117);color:var(--ink,#f0f4ff);font:13px/1.8 ui-monospace,monospace;white-space:pre;tab-size:2;resize:vertical}.ds-editor:focus-visible{outline:3px solid var(--orange,#ffb34c);outline-offset:5px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Algorithm Workspace",
+    "overview": "A Gradelyy-inspired dark workspace uses blue actions, crisp typography, and layered neutral surfaces to support sustained study. Reading remains central; performance evidence and Java practice extend the original sequential course without replacing it.",
+    "keyCharacteristics": [
+      "Dark neutral surfaces with purposeful blue accents.",
+      "Sora headings and DM Sans reading text.",
+      "Sequential lessons, explicit algorithm states, and targeted review.",
+      "Optional light appearance with the same component structure."
+    ],
+    "rules": [],
+    "dos": [
+      "Do preserve the original lesson sequence and mastery progression.",
+      "Do distinguish latest learning evidence, self-reported testing, and entered official marks.",
+      "Do keep both appearances readable with visible focus and explicit feedback."
+    ],
+    "donts": [
+      "Don't present local Java testing as automatic grading.",
+      "Don't replace concrete algorithm states with decorative graphics."
+    ]
+  }
+}

@@ -1,0 +1,427 @@
+[
+  {
+    "id": 1,
+    "title": "Think like an algorithm designer",
+    "subtitle": "From a problem statement to a defensible solution.",
+    "topics": [
+      "Contracts",
+      "Correctness",
+      "Cost models"
+    ],
+    "sections": [
+      {
+        "title": "Start with a contract",
+        "body": "An algorithm is a finite, unambiguous procedure. Before choosing a data structure, specify valid inputs, the required output, and edge cases. Correctness is relative to this contract: returning any pair is different from returning the first pair.",
+        "example": "Two-sum contract: given an integer array and a target, return two distinct indices whose values sum to the target, or report that none exist. Can indices repeat? No. Can values repeat? Yes."
+      },
+      {
+        "title": "Build a baseline, then improve it",
+        "body": "A simple correct solution is a reference implementation. Enumerate every pair in O(n²) time and O(1) auxiliary space. A hash-set scan trades O(n) space for expected O(n) time. Sorting plus two pointers costs O(n log n), and requires care to preserve original indices.",
+        "example": "For [4, 1, 4] and target 8, indices 0 and 2 are valid. A solution that stores only distinct values must still account for two occurrences."
+      },
+      {
+        "title": "Separate evidence from proof",
+        "body": "Tests can expose a bug, but passing a finite test set does not prove correctness for all inputs. Prove the core idea and use boundary, random, and adversarial tests to challenge the implementation. Measure operations separately from wall-clock time.",
+        "example": "Compare an optimized solution against the brute-force baseline on many small generated arrays. Include empty input, duplicates, negatives, and no-solution cases."
+      },
+      {
+        "title": "Turn a specification into a test oracle",
+        "body": "Separate input validity from output validity. For two-sum, multiple correct pairs may exist, so comparing one exact pair with a reference can reject a valid solution. Instead validate indices, distinctness, and sum; if no pair is returned, check that the baseline finds none.",
+        "example": "Input [1,4,2,3], target 5 has pairs (0,1) and (2,3). An output validator accepts either. A single expected-output array is an incomplete oracle."
+      }
+    ],
+    "lab": "Implement brute-force two-sum in Java. State its contract and test five edge cases. Then describe how you would compare it with a faster implementation.",
+    "code": "static int[] twoSum(int[] a, int target) {\n  for (int i = 0; i < a.length; i++)\n    for (int j = i + 1; j < a.length; j++)\n      if ((long) a[i] + a[j] == target)\n        return new int[]{i, j};\n  return new int[]{-1, -1};\n}",
+    "resource": "https://algs4.cs.princeton.edu/14analysis/",
+    "objectives": [
+      "Explain contracts using a concrete input.",
+      "Explain correctness using a concrete input.",
+      "Explain cost models using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 2,
+    "title": "Divide, solve, combine",
+    "subtitle": "Recursion, Merge Sort, and recurrence relations.",
+    "topics": [
+      "Recursion",
+      "Merge Sort",
+      "Recurrences"
+    ],
+    "sections": [
+      {
+        "title": "Make progress toward a base case",
+        "body": "Every recursive call must reduce a well-founded measure. A balanced split has logarithmic depth; removing one item at a time has linear depth. Depth alone is not the total work: all calls at each level matter.",
+        "example": "T(n)=T(n−1)+Θ(1) expands to n−1 constant-work steps, so T(n)=Θ(n). Binary search instead halves the input and does constant work per level: Θ(log n)."
+      },
+      {
+        "title": "Merge Sort: the merge is the work",
+        "body": "Sort each half, then repeatedly take the smaller front item from the two sorted halves. The invariant is that the output prefix is sorted and contains exactly the smallest consumed items. Taking from the left on equality preserves stability.",
+        "example": "[7,2,5,1] → [2,7] and [1,5] → take 1, then 2, then 5, then 7. Each merge is linear. Across log₂n levels, total time is Θ(n log n), with Θ(n) auxiliary array space."
+      },
+      {
+        "title": "Read a recurrence before using a theorem",
+        "body": "For T(n)=aT(n/b)+f(n), compare f(n) with n^(log_b a). The Master theorem needs its stated conditions; it does not apply directly to T(n−1). If the nonrecursive work dominates polynomially, verify the regularity condition.",
+        "example": "T(n)=2T(n/2)+(n log n)² has f(n)=n²log²n, polynomially larger than n. Also 2f(n/2)/f(n) approaches 1/2. Therefore T(n)=Θ(n²log²n), not Θ(n²log³n)."
+      },
+      {
+        "title": "Prove the merge, then the recursion",
+        "body": "During merge, the output prefix contains the smallest consumed elements in sorted order. Each step preserves that claim by choosing the smaller remaining front. Strong induction handles the recursion: singleton ranges are sorted, recursive halves are sorted by hypothesis, and the merge preserves both order and multiset.",
+        "example": "For half-open ranges [lo,hi), mid=lo+(hi−lo)/2. The calls [lo,mid) and [mid,hi) cover every item once. The condition hi−lo≤1 handles empty ranges as well."
+      }
+    ],
+    "lab": "Assignment 1: implement stable Merge Sort with a shared auxiliary array. Compare against Arrays.sort on random, sorted, reversed, and duplicate-heavy arrays. Derive time and space bounds.",
+    "code": "static void mergeSort(int[] a, int lo, int hi, int[] tmp) {\n  if (hi - lo <= 1) return;\n  int mid = lo + (hi - lo) / 2;\n  mergeSort(a, lo, mid, tmp);\n  mergeSort(a, mid, hi, tmp);\n  int i = lo, j = mid;\n  for (int k = lo; k < hi; k++)\n    tmp[k] = j == hi || (i < mid && a[i] <= a[j])\n        ? a[i++] : a[j++];\n  System.arraycopy(tmp, lo, a, lo, hi - lo);\n}",
+    "resource": "https://algs4.cs.princeton.edu/22mergesort/",
+    "objectives": [
+      "Explain recursion using a concrete input.",
+      "Explain merge sort using a concrete input.",
+      "Explain recurrences using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 3,
+    "title": "Prove it. Then measure it.",
+    "subtitle": "Asymptotic bounds, invariants, and honest benchmarks.",
+    "topics": [
+      "Big O, Ω, Θ",
+      "Invariants",
+      "Benchmarking"
+    ],
+    "sections": [
+      {
+        "title": "Bounds are statements, not stopwatch readings",
+        "body": "O(g) is an eventual upper bound, Ω(g) a lower bound, and Θ(g) both. These notations do not inherently mean worst, best, or average case. First name the function you are bounding, then give the bound.",
+        "example": "3n²+7n+2 is Θ(n²) and O(n³). The latter is valid but loose. An algorithm may have best-case Θ(n) and worst-case Θ(n²)."
+      },
+      {
+        "title": "A loop invariant has three obligations",
+        "body": "State a property that holds before each iteration. Prove initialization, maintenance, and termination. Couple the invariant with a decreasing variant to establish termination; partial correctness alone is not enough.",
+        "example": "Insertion Sort: before iteration i, a[0..i) is sorted and is a permutation of the original prefix. Inserting a[i] preserves this property. At i=n the whole array is sorted."
+      },
+      {
+        "title": "Benchmark the question you actually have",
+        "body": "Java measurements are affected by JIT compilation, garbage collection, input distribution, and hardware caches. Warm up, repeat, separate setup from timed work, and report input sizes and distributions. A finite benchmark cannot prove an asymptotic bound.",
+        "example": "For quadratic work, doubling n tends toward four times the work. A small run that doubles in time does not invalidate the proof: fixed overhead or cache behavior can dominate."
+      },
+      {
+        "title": "Reason about dependent loops",
+        "body": "Nested syntax alone does not imply quadratic cost. Count the total executions of the innermost operation, accounting for changing bounds. For a two-pointer scan whose pointers never retreat, each pointer moves at most n times, so the total may be linear.",
+        "example": "If j starts at 0 outside the outer loop and only increases while j<n, the inner body executes at most n times across the entire run. Resetting j=0 inside each iteration changes that bound."
+      }
+    ],
+    "lab": "Prove linear search correct using a loop invariant. Measure two implementations across doubling input sizes; record warm-up, repetitions, medians, and the limits of your conclusion.",
+    "code": "static int find(int[] a, int x) {\n  // Invariant: x is absent from a[0..i).\n  for (int i = 0; i < a.length; i++)\n    if (a[i] == x) return i;\n  return -1;\n}",
+    "resource": "https://algs4.cs.princeton.edu/14analysis/",
+    "objectives": [
+      "Explain big o, ω, θ using a concrete input.",
+      "Explain invariants using a concrete input.",
+      "Explain benchmarking using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 4,
+    "title": "Choose the right collection",
+    "subtitle": "Arrays, linked lists, stacks, queues, and heaps.",
+    "topics": [
+      "Amortization",
+      "Cache locality",
+      "Binary heaps"
+    ],
+    "sections": [
+      {
+        "title": "Contiguous storage changes real performance",
+        "body": "Arrays provide O(1) indexed access and good sequential locality. Linked lists need O(n) indexed search and pointer chasing. Inserting at a known node can be O(1), but finding that node is not free. Use a stack for LIFO and a queue for FIFO.",
+        "example": "An ArrayList scan often outperforms a LinkedList scan even though both are Θ(n). Nearby array elements share cache lines; linked nodes may be scattered in memory."
+      },
+      {
+        "title": "Pay for occasional expensive operations",
+        "body": "A dynamic array insertion can cost Θ(n) when capacity grows. With geometric growth, the total copied elements over n appends is O(n), so append has amortized O(1) cost. Amortized analysis bounds a sequence; it is not a probabilistic average.",
+        "example": "Doubling capacities 1,2,4,8,… copies fewer than 2n elements in total. Growing capacity by one instead copies 1+2+…+(n−1)=Θ(n²)."
+      },
+      {
+        "title": "Heap order is a local promise",
+        "body": "In a min-heap, every parent is at most its children. The root is the minimum, but the array is not globally sorted. Root removal swaps in the last item and sifts down in O(log n). Bottom-up heap construction is O(n).",
+        "example": "Removing all n items by standard root removal takes Θ(n log n) in the worst case. Do not multiply build-heap cost by the number of removals."
+      },
+      {
+        "title": "Why bottom-up heap construction is linear",
+        "body": "Most nodes are close to leaves and can move only a short distance. At most about n/2^(h+1) nodes have height h. Summing their O(h) work gives O(n·Σh/2^h)=O(n). This differs from inserting n items individually, which can cost O(n log n).",
+        "example": "In a complete heap of 15 items, 8 leaves need no sift, 4 parents move at most 1 level, 2 move at most 2 levels, and the root at most 3. Bound work by 4+4+3 rather than 15×3."
+      }
+    ],
+    "lab": "Assignment 2: implement a dynamic array and a binary min-heap. Document empty-structure behavior. Compare array/list traversal and distinguish observed performance from asymptotic cost.",
+    "code": "static void siftDown(int[] h, int size, int i) {\n  while (2 * i + 1 < size) {\n    int c = 2 * i + 1;\n    if (c + 1 < size && h[c + 1] < h[c]) c++;\n    if (h[i] <= h[c]) break;\n    int t = h[i]; h[i] = h[c]; h[c] = t;\n    i = c;\n  }\n}",
+    "resource": "https://algs4.cs.princeton.edu/24pq/",
+    "objectives": [
+      "Explain amortization using a concrete input.",
+      "Explain cache locality using a concrete input.",
+      "Explain binary heaps using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 5,
+    "title": "Hashing and search trees",
+    "subtitle": "Collisions, balance, and prefix-aware search.",
+    "topics": [
+      "Hash tables",
+      "Balanced BSTs",
+      "Tries"
+    ],
+    "sections": [
+      {
+        "title": "Hashing distributes; it does not make keys unique",
+        "body": "Separate chaining stores colliding keys together. With n keys and m buckets, load factor α=n/m; expected lookup is O(1+α) under well-distributed hashing. The worst case remains O(n). Equality checks distinguish colliding keys.",
+        "example": "At n=120 and m=40, α=3. If a resize creates 80 buckets, α becomes 1.5. Stored entries must be placed according to the new capacity: copying bucket positions is not enough."
+      },
+      {
+        "title": "Different collision policies need different deletion rules",
+        "body": "Open addressing probes within the table. Deleting a key by making its slot empty can break searches for later keys in the probe chain; a tombstone preserves the chain. Balanced BSTs instead guarantee logarithmic search and support ordered queries.",
+        "example": "A plain BST built from ascending keys may become a chain of height n−1. AVL or red-black balancing keeps height O(log n). Hash tables do not directly provide sorted range queries."
+      },
+      {
+        "title": "A trie follows symbols, not key comparisons",
+        "body": "A trie stores one transition per symbol along a key path. Search for length L costs O(L) if transitions are O(1). A terminal marker distinguishes a complete key from a prefix. Memory usage depends strongly on alphabet representation.",
+        "example": "Store “car” and “cart”. Both share c→a→r, but “car” needs its own terminal marker. Searching “ca” reaches a node yet must return false for exact-key lookup."
+      },
+      {
+        "title": "Deletion is part of the search invariant",
+        "body": "In linear probing, lookup stops at a never-used slot. A deleted slot cannot become never-used while later collided keys still depend on probing through it. Use tombstones and continue searches across them; periodically rebuild if tombstones accumulate.",
+        "example": "Keys hashing to 2 occupy slots 2,3,4. Delete slot 3. Searching for the key in slot 4 must continue past the tombstone. An empty slot 3 would incorrectly terminate the search."
+      }
+    ],
+    "lab": "Build a chained hash table and a trie. Force collisions deliberately. Test duplicate updates, deletion, empty keys, and a key that is a prefix of another.",
+    "code": "static final class Trie {\n  java.util.Map<Character, Trie> next = new java.util.HashMap<>();\n  boolean terminal;\n  void add(String s) {\n    Trie p = this;\n    for (char c : s.toCharArray())\n      p = p.next.computeIfAbsent(c, k -> new Trie());\n    p.terminal = true;\n  }\n  boolean contains(String s) {\n    Trie p = this;\n    for (char c : s.toCharArray()) {\n      p = p.next.get(c);\n      if (p == null) return false;\n    }\n    return p.terminal;\n  }\n}",
+    "resource": "https://algs4.cs.princeton.edu/34hash/",
+    "objectives": [
+      "Explain hash tables using a concrete input.",
+      "Explain balanced bsts using a concrete input.",
+      "Explain tries using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 6,
+    "title": "Connect components cheaply",
+    "subtitle": "Disjoint sets and minimum spanning trees.",
+    "topics": [
+      "DSU",
+      "Kruskal",
+      "Prim"
+    ],
+    "sections": [
+      {
+        "title": "DSU maintains a partition",
+        "body": "find returns a component representative. union joins distinct components. Path compression flattens find paths; union by size attaches the smaller tree to the larger. Together they give amortized O(α(n)) per operation over a sequence. DSU does not maintain graph paths.",
+        "example": "If 0–1 and 2–3 are connected, union(1,3) merges the two sets. A later union(0,2) changes nothing and signals that an added undirected edge would close a cycle."
+      },
+      {
+        "title": "Kruskal and Prim use the same safe-edge principle",
+        "body": "The cut property says a lightest edge crossing a cut is safe for some MST. Kruskal scans edges in weight order and accepts those joining different DSU components: O(E log E). Prim grows one tree with the cheapest crossing edge.",
+        "example": "For 1–2(2), 1–3(3), 2–3(1), 2–4(4), 3–4(5), Prim from 1 chooses 1–2, then 2–3, then 2–4. Total weight is 7. The globally smallest edge need not be chosen first by Prim."
+      },
+      {
+        "title": "State your representation and implementation",
+        "body": "Prim with adjacency lists and a binary heap takes O(E log V) on a connected simple graph. A matrix implementation takes O(V²). A lazy heap must skip stale entries. A disconnected input produces a forest if you restart per component.",
+        "example": "An MST minimizes total tree weight, not distance from the start. Negative weights are allowed for MSTs. Equal weights can create multiple valid MSTs."
+      },
+      {
+        "title": "Exchange arguments justify greedy choices",
+        "body": "Take a lightest edge e crossing a cut that respects the current forest. If an MST does not contain e, adding it creates a cycle. That cycle has another cut-crossing edge f with weight at least e. Replacing f with e preserves a spanning tree without increasing weight.",
+        "example": "The proof guarantees a lightest crossing edge belongs to some MST. With tied weights it need not belong to every MST. This is why a different valid selection order can still be correct."
+      }
+    ],
+    "lab": "Assignment 3A: implement DSU, Kruskal, and Prim. Cross-check total weights on small random connected graphs. Include ties, negative edges, isolated vertices, and explain the cut property.",
+    "code": "static final class DSU {\n  int[] p, size;\n  DSU(int n) {\n    p = new int[n]; size = new int[n];\n    for (int i=0;i<n;i++) { p[i]=i; size[i]=1; }\n  }\n  int find(int x) {\n    while (x != p[x]) { p[x]=p[p[x]]; x=p[x]; }\n    return x;\n  }\n  boolean union(int a, int b) {\n    a=find(a); b=find(b); if(a==b) return false;\n    if(size[a]<size[b]) { int t=a;a=b;b=t; }\n    p[b]=a;size[a]+=size[b];return true;\n  }\n}",
+    "resource": "https://cp-algorithms.com/graph/mst_prim.html",
+    "objectives": [
+      "Explain dsu using a concrete input.",
+      "Explain kruskal using a concrete input.",
+      "Explain prim using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 7,
+    "title": "Put directed graphs in order",
+    "subtitle": "DFS, SCCs, topological order, and DAG shortest paths.",
+    "topics": [
+      "Kosaraju",
+      "Kahn",
+      "DAG paths"
+    ],
+    "sections": [
+      {
+        "title": "Finish time means the whole subtree is done",
+        "body": "DFS marks discovery before exploring neighbors and records finish after all descendants are processed. With adjacency lists it costs O(V+E). A recursion stack can overflow on a long chain; an explicit stack needs an exit event to preserve finish order.",
+        "example": "In 0→1→2, DFS discovers 0,1,2 and finishes 2,1,0. Reversing finishing order is a topological order only when the graph is a DAG."
+      },
+      {
+        "title": "Kosaraju separates mutual reachability",
+        "body": "First run DFS on the original graph and collect vertices on exit. Then process vertices in decreasing finish order on the transpose, starting a new component at each unvisited vertex. Both passes together take O(V+E). Contracting SCCs always yields a DAG.",
+        "example": "If A→B→C→A and C→D, then {A,B,C} is one SCC and {D} another. Their condensation has one edge. A cycle between components would mean they were mutually reachable and should be one component."
+      },
+      {
+        "title": "Topological order is a dependency schedule",
+        "body": "Kahn repeatedly removes zero-indegree vertices and decrements successors. If fewer than V vertices are removed, a directed cycle exists. For DAG shortest paths, initialize the source to 0, others to infinity, and relax outgoing edges in topological order. Negative edges are safe because there is no cycle.",
+        "example": "In s→a(4), s→b(2), a→b(−5), process s,a,b to obtain distance(b)=−1. Dijkstra’s nonnegative-edge assumption would not hold here."
+      },
+      {
+        "title": "A shortest-path trace needs unreachable states",
+        "body": "Initialize all distances to infinity and only the source to zero. Before relaxing u→v, check that u is reachable; adding a weight to an infinity sentinel can overflow and invent a path. A DAG permits negative edges, because each dependency is processed once in topological order.",
+        "example": "If source 0 reaches 1, but vertex 2 is unreachable from the source with an edge 2→3(−10), vertices 2 and 3 remain unreachable. Do not compute INF−10 and treat it as a real improvement."
+      }
+    ],
+    "lab": "Assignment 3B: implement Kosaraju, Kahn, and DAG shortest paths. Verify every reported component is mutually reachable on small inputs. Reject cyclic inputs for the DAG routine.",
+    "code": "static void finish(int v, java.util.List<Integer>[] g,\n                   boolean[] seen, java.util.List<Integer> order) {\n  seen[v]=true;\n  for(int u:g[v]) if(!seen[u]) finish(u,g,seen,order);\n  order.add(v);\n}\n// First: finish(v, g, seen, order) from every unseen v.\n// Reset seen. Traverse reverse(order) on transposed g.\n// Each new DFS on the transpose labels one SCC.\n// Use iterative DFS for graphs too deep for Java's stack.",
+    "resource": "https://cp-algorithms.com/graph/strongly-connected-components.html",
+    "objectives": [
+      "Explain kosaraju using a concrete input.",
+      "Explain kahn using a concrete input.",
+      "Explain dag paths using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 8,
+    "title": "Remember the right subproblem",
+    "subtitle": "Dynamic programming from state to reconstruction.",
+    "topics": [
+      "LCS & LIS",
+      "Edit distance",
+      "Knapsack & tree DP"
+    ],
+    "sections": [
+      {
+        "title": "Define a state before writing a loop",
+        "body": "A DP state must contain enough information to make future decisions independent of the forgotten past. Identify base cases, transitions, and a dependency order. Memoization evaluates reachable states on demand; tabulation evaluates in an explicit order.",
+        "example": "For 0/1 knapsack, dp[w] is the best value with capacity w using processed items. Iterate w downward for each item. Iterating upward permits the same item repeatedly, solving a different problem."
+      },
+      {
+        "title": "Align prefixes to compare sequences",
+        "body": "Edit distance D[i][j] is the minimum edits converting a[0..i) into b[0..j). Initialize D[i][0]=i and D[0][j]=j. Take the minimum of deletion, insertion, and match/substitution. LCS uses a related prefix grid, but its objective is longest shared subsequence.",
+        "example": "For “cat”→“cut”, substitution gives distance 1. A subsequence need not be contiguous. Edit distance takes O(nm) time, O(nm) space with reconstruction, or O(min(n,m)) for the distance alone."
+      },
+      {
+        "title": "An optimized representation need not be the answer",
+        "body": "For strictly increasing LIS, tails[k] stores the smallest possible ending value of a subsequence of length k+1. Replace the first tails value ≥ x using binary search. This is O(n log n); tails itself need not be a subsequence. Track predecessors to reconstruct.",
+        "example": "Process [3,5,7,1,2,8]: tails evolves to [1,2,7,8]. That array is not a subsequence of the input, but its length 4 is correct. For nondecreasing LIS use the first value > x."
+      },
+      {
+        "title": "Partition and tree states",
+        "body": "For partition DP, let dp[i] be the best answer for the first i items and try every valid final segment j..i. On a rooted tree, combine child states after processing children. For maximum independent set, keep take[v] and skip[v].",
+        "example": "take[v]=weight[v]+Σ skip[child]; skip[v]=Σ max(take[child],skip[child]). Store both choices because selecting the parent restricts which child states are legal."
+      },
+      {
+        "title": "Reconstruct a solution without changing the objective",
+        "body": "A numerical optimum is not a witness. In edit distance, backtrack from (n,m): an equal diagonal needs no edit, a paid diagonal substitutes, a step to (i−1,j) deletes, and a step to (i,j−1) inserts. Resolve ties consistently and reverse the collected operations.",
+        "example": "For a→ab, the optimum is 1. Backtracking first removes the trailing insertion transition, then matches a. If rolling rows save memory, reconstruction needs stored decisions or a more advanced divide-and-conquer method."
+      }
+    ],
+    "lab": "Assignment 4A: implement Edit Distance with reconstruction, LCS, and 0/1 knapsack. Write down states and loop order. Add LIS predecessor reconstruction as an extension.",
+    "code": "static int editDistance(String a, String b) {\n  int[][] d=new int[a.length()+1][b.length()+1];\n  for(int i=0;i<=a.length();i++) d[i][0]=i;\n  for(int j=0;j<=b.length();j++) d[0][j]=j;\n  for(int i=1;i<=a.length();i++)\n    for(int j=1;j<=b.length();j++) {\n      int cost=a.charAt(i-1)==b.charAt(j-1)?0:1;\n      d[i][j]=Math.min(d[i-1][j]+1,\n        Math.min(d[i][j-1]+1,d[i-1][j-1]+cost));\n    }\n  return d[a.length()][b.length()];\n}",
+    "resource": "https://cp-algorithms.com/dynamic_programming/longest_increasing_subsequence.html",
+    "objectives": [
+      "Explain lcs & lis using a concrete input.",
+      "Explain edit distance using a concrete input.",
+      "Explain knapsack & tree dp using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 9,
+    "title": "Match without starting over",
+    "subtitle": "KMP, prefix functions, and rolling hashes.",
+    "topics": [
+      "KMP preprocessing",
+      "Rolling hash",
+      "Rabin–Karp"
+    ],
+    "sections": [
+      {
+        "title": "The prefix function remembers a useful border",
+        "body": "π[i] is the length of the longest proper prefix of s[0..i] that is also its suffix. On mismatch, jump j to π[j−1] rather than decrementing once or restarting blindly. Each increase and fallback can be amortized, giving O(n) preprocessing.",
+        "example": "For “ababaca”, π=[0,0,1,2,3,0,1]. At the c, fallback from border length 3 to 1, then 0. A proper prefix must be shorter than the full string."
+      },
+      {
+        "title": "KMP reuses previous comparisons",
+        "body": "Maintain how many pattern characters currently match the text suffix. A mismatch follows prefix links; a full match reports an occurrence and falls back to π[m−1], allowing overlaps. Total matching time is O(n+m). Define empty-pattern behavior separately.",
+        "example": "Pattern “aba” in “ababa” matches at indices 0 and 2. Resetting matched length to zero after the first match would miss the overlapping occurrence."
+      },
+      {
+        "title": "Hash windows in constant time",
+        "body": "For H=c₀p^(m−1)+…+cₘ₋₁ mod M, remove c₀p^(m−1), multiply by p, then append the new symbol. Precompute the power once. Equal hashes are candidates, not proof of equal strings. Verify characters when exact correctness is required.",
+        "example": "Hnext=((H−out·p^(m−1))·p+in) mod M. Normalize negative Java remainders. At p=1, “ab” and “ba” have the same sum, so collisions become easy. Modular products must fit in long."
+      },
+      {
+        "title": "Use one hash convention consistently",
+        "body": "With high-order leading symbols, prefix[i+1]=(prefix[i]·p+symbol[i]) mod M and hash(l,r)=prefix[r]−prefix[l]·p^(r−l) mod M. Both formulas use half-open intervals. Java remainder may be negative, so normalize. Comparing different lengths also requires checking their lengths.",
+        "example": "For symbols 1,2,3 and base 10, prefix=[0,1,12,123]. The substring [1,3) is 123−1×100=23. This convention avoids modular inverses for substring queries."
+      }
+    ],
+    "lab": "Assignment 4B: implement KMP preprocessing and search, plus polynomial rolling hash. Cross-check against naive matching, including overlaps. Deliberately demonstrate a collision with base 1.",
+    "code": "static int[] prefix(String s) {\n  int[] pi=new int[s.length()];\n  for(int i=1;i<s.length();i++) {\n    int j=pi[i-1];\n    while(j>0 && s.charAt(i)!=s.charAt(j)) j=pi[j-1];\n    if(s.charAt(i)==s.charAt(j)) j++;\n    pi[i]=j;\n  }\n  return pi;\n}\nstatic long roll(long h,long out,long in,long power,long p,long mod) {\n  // Assumes nonnegative inputs and products fitting in long.\n  long removed=(h-out*power%mod+mod)%mod;\n  return (removed*p+in)%mod;\n}",
+    "resource": "https://cp-algorithms.com/string/prefix-function.html",
+    "objectives": [
+      "Explain kmp preprocessing using a concrete input.",
+      "Explain rolling hash using a concrete input.",
+      "Explain rabin–karp using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  },
+  {
+    "id": 10,
+    "title": "Index a whole text",
+    "subtitle": "Suffix arrays, Kasai LCP, and Aho–Corasick.",
+    "topics": [
+      "Prefix doubling",
+      "Kasai",
+      "Multi-pattern matching"
+    ],
+    "sections": [
+      {
+        "title": "Sort suffixes by ranks of growing blocks",
+        "body": "A suffix array lists starting positions in lexicographic suffix order. Prefix doubling sorts pairs (rank[i],rank[i+k]) with an out-of-range sentinel rank −1, then assigns new ranks and doubles k. Comparison sorting per round gives O(n log²n); radix/counting sorts give O(n log n).",
+        "example": "For “banana”, SA=[5,3,1,0,4,2], corresponding to a, ana, anana, banana, na, nana. Sorting just first characters cannot distinguish the three suffixes starting with a."
+      },
+      {
+        "title": "Kasai reuses almost all of the previous match",
+        "body": "Define LCP[r] as the common-prefix length of SA[r] and SA[r−1], with LCP[0]=0. Build inverse ranks. Process suffixes in text order, compare with the previous suffix in SA, and decrement the carried match length by at most one after each step. Total comparisons are O(n).",
+        "example": "For banana, LCP=[0,1,3,0,0,2]. The longest repeated substring has length max(LCP)=3: “ana”. This LCP convention matters when comparing code or examples."
+      },
+      {
+        "title": "Aho–Corasick matches a dictionary in one scan",
+        "body": "Build a trie of all patterns, then BFS failure links to the longest proper suffix that is a trie prefix. On a missing transition, follow failures. Report terminal outputs including suffix matches via output links. With constant-time transitions, scanning costs O(text length + matches), after construction.",
+        "example": "With patterns “he”, “she”, “hers”, “his”, scanning “ushers” reports “she” and “he” ending at index 3, then “hers” ending at index 5. Reporting only the current terminal misses suffix patterns."
+      },
+      {
+        "title": "Build failure links in breadth-first order",
+        "body": "Aho–Corasick failure links must refer to states whose shorter-prefix information is already available. Initialize root children with failure=root. For each transition v→u by c, follow failure[v] until a c transition exists or the root is reached. Store output links to terminal suffixes to avoid copying large output lists.",
+        "example": "For she, the state she has failure he when he is a trie prefix. Reporting only she misses he at the same ending position. Output links recover suffix matches with work proportional to reported occurrences."
+      }
+    ],
+    "lab": "Implement prefix-doubling suffix array and Kasai. Validate against sorting explicit suffixes on small inputs. Build Aho–Corasick and test overlapping and suffix-related patterns.",
+    "code": "static int[] kasai(String s, int[] sa) {\n  int n=s.length(), h=0;\n  int[] rank=new int[n], lcp=new int[n];\n  for(int r=0;r<n;r++) rank[sa[r]]=r;\n  for(int i=0;i<n;i++) {\n    int r=rank[i];\n    if(r==0) { h=0; continue; }\n    int j=sa[r-1];\n    while(i+h<n && j+h<n && s.charAt(i+h)==s.charAt(j+h)) h++;\n    lcp[r]=h;\n    if(h>0) h--;\n  }\n  return lcp;\n}",
+    "resource": "https://cp-algorithms.com/string/suffix-array.html",
+    "objectives": [
+      "Explain prefix doubling using a concrete input.",
+      "Explain kasai using a concrete input.",
+      "Explain multi-pattern matching using a concrete input.",
+      "State an invariant and justify the time and space bounds."
+    ],
+    "recall": "Without looking back, explain why the algorithm works, name one assumption it needs, and construct an input that breaks a tempting alternative."
+  }
+]
